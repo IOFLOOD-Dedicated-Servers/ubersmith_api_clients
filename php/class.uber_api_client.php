@@ -16,6 +16,7 @@ class uber_api_client
 		'format'      => '',
 		'orig_user'   => null,
 		'orig_ip'     => null,
+		'hotname'     => '',
 	);
 
 	// value of the content type response header
@@ -35,6 +36,9 @@ class uber_api_client
 		}
 		if (isset($username,$api_token)) {
 			$this->options['userpwd'] = $username .':'. $api_token;
+		}
+		if (isset($hostname)) {
+			$this->options['hostname'] = $hostname;
 		}
 	}
 
@@ -99,7 +103,12 @@ class uber_api_client
 			'Accept-Encoding: gzip',
 			'Expect:',
 		);
-
+		
+		//added by John proxying Gabe to work around a SSL issue when you want to use an IP
+		if ($this->options['hostname']) {
+			$headers[] = 'Hostname: ' + $this->options['hostname'];
+		}
+		
 		$url = rtrim($this->options['server'],'/') .'/api/2.0/?method='. urlencode($method);
 
 		if ($this->get_option('format')) {
