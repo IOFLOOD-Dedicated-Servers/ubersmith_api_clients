@@ -16,7 +16,7 @@ class uber_api_client
 		'format'      => '',
 		'orig_user'   => null,
 		'orig_ip'     => null,
-		'hotname'     => '',
+		'hostname'     => '',
 	);
 
 	// value of the content type response header
